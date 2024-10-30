@@ -4,12 +4,8 @@
 
 # **Cahier des charges**
 
-## Dispositif de communication en ligne
-
-<!-- ![DIGITALIZER.png][image2] -->
-
 Version : 0.1  
-Date de la dernière mise à jour : 1 décembre 2016
+Date de la dernière mise à jour : 30 Octobre 2024
 
 # Sommaire
 

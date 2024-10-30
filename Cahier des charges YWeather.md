@@ -37,43 +37,40 @@ Date de la dernière mise à jour : 30 Octobre 2024
    5. [Sécurité](#heading=h.ucfwarmhrtoz)  
    6. [Maintenance et évolutions](#heading=h.47tu3edj9lq6)  
 
-1. # **Cadre du projet** {#cadre-du-projet}
+# 1. **Cadre du projet** {#cadre-du-projet}
 
-   1. ## Résumé du projet {#résumé-du-projet}
+   ## 1.  Résumé du projet {#résumé-du-projet}
 
-Le commanditaire du projet Mr. PArnaud, gérant de l’Hôtel Paradis a exprimé les besoins suivants : 
+Projet de création d'une API de météorologie accessible depuis un site en ligne.
 
-* développer la présence en ligne de l’hôtel  
-* moderniser son image   
-* permettre à ses clients de réserver leur séjour à l’hôtel sans avoir à les appeler 
+## 3. Enjeux et objectifs {#enjeux-et-objectifs}
 
+L'objectif est de rendre un MVP comprenant une API, un site web utilisable qui présente l'API et hébergé dans le cloud ( serveur AWS ) et un système de prévision météo utilisant du machine learning.
 
-3. ## Enjeux et objectifs {#enjeux-et-objectifs}
+## 4. Présentation de l’équipe
 
-L’objectif du projet est de permettre à l’hôtel de ré-atteindre un point d’équilibre en livrant un site pouvant générer plus de \+40K€ de CA par mois.
+- Arnaud Pfeil-Lefort ( * )
+- Tom Fuster
+- Lucas Savy
 
-4. ## Présentation de l’équipe
+## 5. Livrables
 
-![Copie de Organigramme fonctionnel Hôtel Paradis avec traducteurs (1).png][image3]
-
-5. ## Livrables
-
-Pour atteindre cet objectif, l’agence Digitalizer livrera les éléments suivants : 
+Pour atteindre cet objectif, notre équipe livrera les éléments suivants : 
 
 | Cahier des charges fonctionnel et technique | 24 novembre |
 | :---- | ----: |
-| Adaptation Web de la charte graphique | 27 novembre |
-| Charte éditoriale | 27 novembre |
-| Maquettes du site | 4 décembre |
-| Site  | 23 décembre |
-| \+Formation à WP | 28 décembre |
+| Cahier des charges | - date - |
+| Charte éditoriale | - date - |
+| Maquettes du site | - date - |
+| Site  | - date - |
+| \+Formation à WP | - date - |
 
-6. ## Planning prévisionnel {#planning-prévisionnel}
+## 6. Planning prévisionnel {#planning-prévisionnel}
 
 ![Capture d’écran 2017-02-28 à 10.25.06.png][image4]  
 [Lien vers le planning détailllé.](https://docs.google.com/spreadsheets/d/1vgZtQVEY7T8l6MMPPE6_OXdYph2I1mksYfJRl_fQyZ8/edit?usp=sharing)
 
-2. # **Benchmark**
+# 2. **Benchmark**
 
 Maison Souquet ➡︎ www.maisonsouquet.com  
 ![Capture d’écran 2017-03-02 à 12.23.42.png][image5]![Capture d’écran 2017-03-02 à 12.41.31.png][image6]

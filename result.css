@@ -14,3 +14,8 @@ body {
 .rest {
     height: 2000px;
 }
+
+.widget {
+    background-color: red;
+    height: 25vh;
+}

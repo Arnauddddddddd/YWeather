@@ -1,25 +1,18 @@
-CREATE TABLE `Place` (
-  `id` text,
+CREATE TABLE IF NOT EXISTS `Place` (
+  `place_id` integer PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `name` varchar(50),
   `latitude` float,
   `longitude` float
 );
 
-CREATE TABLE `Place_Time_Weather` (
-  `id` text,
-  `time_id` text,
-  `place_id` text,
-  `weather_id` text
-);
-
-CREATE TABLE `Time` (
-  `id` text,
+CREATE TABLE IF NOT EXISTS `Time` (
+  `time_id` integer PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `day` timestamp,
   `hour` timestamp
 );
 
-CREATE TABLE `Weather` (
-  `id` text,
+CREATE TABLE IF NOT EXISTS `Weather` (
+  `weather_id` integer PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `temperature` float,
   `precipitation` float,
   `state` varchar(50),
@@ -27,8 +20,10 @@ CREATE TABLE `Weather` (
   `humidity` float
 );
 
-ALTER TABLE `Place_Time_Weather` ADD FOREIGN KEY (`weather_id`) REFERENCES `Weather` (`id`);
+CREATE TABLE IF NOT EXISTS `Place_Time_Weather` (
+  `place_time_weather_id` integer PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  `time_id` text,
+  `place_id` text,
+  `weather_id` text
+);
 
-ALTER TABLE `Place_Time_Weather` ADD FOREIGN KEY (`time_id`) REFERENCES `Time` (`id`);
-
-ALTER TABLE `Place_Time_Weather` ADD FOREIGN KEY (`place_id`) REFERENCES `Place` (`id`);

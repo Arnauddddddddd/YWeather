@@ -1,0 +1,122 @@
+
+html {
+    background : url('background.png') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+
+* {
+    color: white;
+    line-height: 95%;
+    font-family: 'League Spartan', sans-serif;
+    font-weight: 700;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+}
+
+.title {
+    color: white;
+    font-size: 59px;
+    margin-left: 10px;
+}
+
+.about {
+    color: white;
+    font-size: 45px;
+    margin-right: 10px;
+}
+
+.main-text {
+    font-size: 95px;
+    text-align: center;
+    background: -webkit-linear-gradient(95deg, #999999, 40%, #FFFFFF);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.div-main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 7%;
+}
+
+form {
+    display: flex;
+    align-items: center;
+    background-color: #D8D8D8;
+    border-radius: 12px;
+    margin: 10px;
+    height: 65px;
+    width: 800px;
+}
+
+input[type="text"] {
+    outline: none;
+    appearance: none;
+    border: none;
+    background: none;
+    color: #181818;
+    margin-left: 15px;
+    font-size: 33px;
+    font-weight: 400;
+    font-family: 'Josefin Sans', sans-serif;
+    position: relative;
+    top: 2px;
+}
+
+input[type="text"]::placeholder {
+    color: #181818;
+    font-size: 33px;
+    font-weight: 400;
+    font-family: 'Josefin Sans', sans-serif;
+    position: relative;
+    top: 2px;
+}
+
+button[type="submit"] {
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    appearance: none;
+    border: none;
+    background: none;
+    color: #181818;
+    font-size: 20px;
+    margin-left: 10px;
+}
+
+img {
+    color: #181818;
+    width: 40px;
+    height: 40px;
+    position: relative;
+    top: 2px;
+}

@@ -3,60 +3,43 @@
 <head>
     <meta charset="UTF-8"><!-- TODO : METTRE .php  -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=League+Spartan:wght@100..900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://kit.fontawesome.com/ea8060e81f.js" crossorigin="anonymous"></script>
+    
     <title> YWEATHER </title>
-    <style>
-        
-        html {
-            background : url('background.png') no-repeat center center fixed;
-            -webkit-background-size: cover;
-            background-size: cover;
-        }
 
-        * {
-            color: white;
-            line-height: 95%;
-            font-family: 'League Spartan', sans-serif;
-            font-weight: 700;
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            width: 90%;
-        }
-
-        .title {
-            color: white;
-            font-size: 59px;
-        }
-
-        .about {
-            color: white;
-            font-size: 45px;
-        }
-
-    </style>
 </head>
+
 <body>
     <div class="container">
         <nav class="navbar">
             <h1 class="title"> Yweather </h1>
             <p class="about">about</p>
         </nav>
+
+        <div class="div-main-content">
+            <div class="div">
+                <h1 class="main-text"> Wanna look closer to our </br> beautiful api ! </h1>
+            </div>
+    
+            <div class="div">
+                <form action="" method="get">
+                    <button type="submit"> <img src="loupe.png" alt="" srcset=""> </button>
+                    <input type="text" name="id" placeholder="Search for a city ...">
+                </form>
+            </div>
+        </div>
+
+        
         
     </div>
 

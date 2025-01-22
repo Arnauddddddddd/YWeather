@@ -9,22 +9,25 @@ function get( $pdo, $id ) {
     if ( empty( $id ) ) {
         $stmt = $pdo->prepare("SELECT * FROM Place");
         $stmt->execute();
-    } else {
-        
+    } else if ( $id == (int) $id ) {
         $stmt = $pdo->prepare("SELECT * FROM Place WHERE place_id = :place_id");
         $stmt->execute( [ 'place_id' => $id ] );
+    } else {
+        $stmt = $pdo->prepare("SELECT * FROM Place WHERE name = :name");
+        $stmt->execute( [ 'name' => $id ] );
     }
     
-    $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $places = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     http_response_code(200);
     return json_encode([
         "status" => "success",
-        "value" => $users,
+        "value" => $places,
     ]);
 }
 
 function post( $pdo ) {
+    $jsonData = file_get_contents('php://input');
     $data = json_decode($jsonData, true);
     if ($data !== null) {
         $name = $data['name'];
@@ -42,7 +45,7 @@ function post( $pdo ) {
      }
 }
 
-function put( $pdo ) {  
+function put( $pdo ) {
     $jsonData = file_get_contents('php://input');
     $data = json_decode($jsonData, true);
 
@@ -87,38 +90,32 @@ function remove( $pdo ) {
     ]);
 }
 
-$jsonData = file_get_contents('php://input');
-$data = json_decode($jsonData, true);
-$city = isset($_GET['city']);
-echo $_GET['city'];
-echo json_encode([
-    "status" => "success",
-    "value" => $city,
-]);
-
-
-// switch ($_SERVER['REQUEST_METHOD']) {
-
-//     case 'GET':
-//         echo get( $pdo, isset($_GET['id']) );
-//         break;
-//     case 'POST':
-//         echo post( $pdo );
-//         break;
-//     case 'PUT':
-//         echo put( $pdo );
-//         break;
-//     case 'DELETE':
-//         echo remove( $pdo );
-//         break;
-    
-//     default:
-//         http_response_code(400);
-//         echo json_encode([
-//             "status" => "error",
-//             "message" => "Invalid Request",
-//         ]);
-//         break;
-// }
+ switch ($_SERVER['REQUEST_METHOD']) {
+     case 'GET':
+        if (isset($_GET['id'])) {
+            echo get( $pdo, $_GET['id'] );
+        } else if (isset($_GET['place'])) {
+            echo get( $pdo, $_GET['place'] );
+        } else {
+            echo get( $pdo, null );
+        }
+         break;
+     case 'POST':
+         echo post( $pdo );
+         break;
+     case 'PUT':
+         echo put( $pdo );
+         break;
+     case 'DELETE':
+         echo remove( $pdo );
+         break;  
+     default:
+         http_response_code(400);
+         echo json_encode([
+             "status" => "error",
+             "message" => "Invalid Request",
+         ]);
+         break;
+ }
 
 ?>

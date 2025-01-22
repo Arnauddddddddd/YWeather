@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -88,5 +86,25 @@
                 });
         });
     </script>
+
+    <?php
+        $jsoncontent = "";
+        if ( isset($_GET["route"]) ) {
+            $request_uri = $_GET["route"];
+            $segments = explode('/', trim($request_uri, characters: '/'));
+
+            if ( $segments[0] == (int)$segments[0] ) {
+                $jsoncontent = file_get_contents("http://localhost/YWeather/src/CRUD/api.php?id=" . $segments[0]);
+            } else {
+                $jsoncontent = file_get_contents("http://localhost/YWeather/src/CRUD/api.php?place=" . $segments[0]);
+            }
+        } else {
+            $jsoncontent = file_get_contents("http://localhost/YWeather/src/CRUD/api.php");
+        }
+    ?>
+
+    <p><?= $jsoncontent ?></p>
+
+
 </body>
 </html>

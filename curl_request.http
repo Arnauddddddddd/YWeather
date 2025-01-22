@@ -1,0 +1,18 @@
+@baseUrl = http://localhost:80/YWeather/API
+
+GET {{baseUrl}}/1
+
+###
+
+GET {{baseUrl}}/Strasbourg
+
+###
+
+POST {{baseUrl}}/place
+content-type: application/json
+
+{
+          "name": "Paris",
+          "latitude": 48,
+          "longitude": 2
+}

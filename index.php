@@ -59,7 +59,7 @@
 
     <script>
         document.getElementById('getJoke').addEventListener('click', function() {
-            fetch('http://localhost/YWeather/src/CRUD/api.php')
+            fetch('http://localhost/YWeather/API/index.php')
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('joke').textContent = JSON.stringify(data.value);
@@ -74,7 +74,7 @@
         document.getElementById('buttonCity').addEventListener('click', function() {
             let test = document.getElementById('getCity').value
             console.log(test)
-            fetch(`http://localhost/YWeather/src/CRUD/api.php?city=${encodeURIComponent(test)}`)
+            fetch(`http://localhost/YWeather/API/index.php?city=${encodeURIComponent(test)}`)
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('buttonCity').textContent = JSON.stringify(data.value);
@@ -87,23 +87,9 @@
         });
     </script>
 
-    <?php
-        $jsoncontent = "";
-        if ( isset($_GET["route"]) ) {
-            $request_uri = $_GET["route"];
-            $segments = explode('/', trim($request_uri, characters: '/'));
+    
 
-            if ( $segments[0] == (int)$segments[0] ) {
-                $jsoncontent = file_get_contents("http://localhost/YWeather/src/CRUD/api.php?id=" . $segments[0]);
-            } else {
-                $jsoncontent = file_get_contents("http://localhost/YWeather/src/CRUD/api.php?place=" . $segments[0]);
-            }
-        } else {
-            $jsoncontent = file_get_contents("http://localhost/YWeather/src/CRUD/api.php");
-        }
-    ?>
-
-    <p><?= $jsoncontent ?></p>
+    
 
 
 </body>

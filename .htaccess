@@ -6,7 +6,7 @@ RewriteEngine On
 # Rediriger toutes les requêtes vers public/index.php
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php?route=$1 [QSA,L]
+RewriteRule ^(.*)$ API/index.php?route=$1 [QSA,L]
 
 # Autoriser les requêtes depuis d'autres domaines (CORS)
 <IfModule mod_headers.c>

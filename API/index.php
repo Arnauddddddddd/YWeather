@@ -1,20 +1,20 @@
 <?php
-require_once "../db/db.php";
+require_once "../src/db/db.php";
 
 header("Content-Type: application/json");
 
 
 
-function get( $pdo, $id ) {
-    if ( empty( $id ) ) {
+function get( $pdo, $place ) {
+    if ( empty( $place ) ) {
         $stmt = $pdo->prepare("SELECT * FROM Place");
         $stmt->execute();
-    } else if ( $id == (int) $id ) {
+    } else if ( $place == (int) $place ) {
         $stmt = $pdo->prepare("SELECT * FROM Place WHERE place_id = :place_id");
-        $stmt->execute( [ 'place_id' => $id ] );
+        $stmt->execute( [ 'place_id' => $place ] );
     } else {
         $stmt = $pdo->prepare("SELECT * FROM Place WHERE name = :name");
-        $stmt->execute( [ 'name' => $id ] );
+        $stmt->execute( [ 'name' => $place ] );
     }
     
     $places = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -89,33 +89,32 @@ function remove( $pdo ) {
         "status" => "success",
     ]);
 }
+$segments = null;
+if (isset($_GET["route"])) {
+    $request_uri = $_GET["route"];
+    $segments = explode('/', trim($request_uri, characters: '/'));
+}
 
  switch ($_SERVER['REQUEST_METHOD']) {
      case 'GET':
-        if (isset($_GET['id'])) {
-            echo get( $pdo, $_GET['id'] );
-        } else if (isset($_GET['place'])) {
-            echo get( $pdo, $_GET['place'] );
-        } else {
-            echo get( $pdo, null );
-        }
+        echo get( $pdo, $segments[1] );
          break;
      case 'POST':
-         echo post( $pdo );
-         break;
+        echo post( $pdo );
+        break;
      case 'PUT':
-         echo put( $pdo );
-         break;
+        echo put( $pdo );
+        break;
      case 'DELETE':
-         echo remove( $pdo );
-         break;  
+        echo remove( $pdo );
+        break;  
      default:
-         http_response_code(400);
-         echo json_encode([
+        http_response_code(400);
+        echo json_encode([
              "status" => "error",
              "message" => "Invalid Request",
-         ]);
-         break;
+        ]);
+        break;
  }
 
 ?>

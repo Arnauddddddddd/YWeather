@@ -1,5 +1,5 @@
 <?php
-require_once "db.php";
+require_once "../db/db.php";
 
 header("Content-Type: application/json");
 
@@ -10,6 +10,7 @@ function get( $pdo, $id ) {
         $stmt = $pdo->prepare("SELECT * FROM Place");
         $stmt->execute();
     } else {
+        
         $stmt = $pdo->prepare("SELECT * FROM Place WHERE place_id = :place_id");
         $stmt->execute( [ 'place_id' => $id ] );
     }
@@ -86,27 +87,38 @@ function remove( $pdo ) {
     ]);
 }
 
-switch ($_SERVER['REQUEST_METHOD']) {
-    case 'GET':
-        echo get( $pdo, isset($_GET['id']) );
-        break;
-    case 'POST':
-        echo post( $pdo );
-        break;
-    case 'PUT':
-        echo put( $pdo );
-        break;
-    case 'DELETE':
-        echo remove( $pdo );
-        break;
+$jsonData = file_get_contents('php://input');
+$data = json_decode($jsonData, true);
+$city = isset($_GET['city']);
+echo $_GET['city'];
+echo json_encode([
+    "status" => "success",
+    "value" => $city,
+]);
+
+
+// switch ($_SERVER['REQUEST_METHOD']) {
+
+//     case 'GET':
+//         echo get( $pdo, isset($_GET['id']) );
+//         break;
+//     case 'POST':
+//         echo post( $pdo );
+//         break;
+//     case 'PUT':
+//         echo put( $pdo );
+//         break;
+//     case 'DELETE':
+//         echo remove( $pdo );
+//         break;
     
-    default:
-        http_response_code(400);
-        echo json_encode([
-            "status" => "error",
-            "message" => "Invalid Request",
-        ]);
-        break;
-}
+//     default:
+//         http_response_code(400);
+//         echo json_encode([
+//             "status" => "error",
+//             "message" => "Invalid Request",
+//         ]);
+//         break;
+// }
 
 ?>

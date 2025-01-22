@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,15 +51,39 @@
         <button id="getJoke"> weatherrrr </button>
     </div>
 
+
+    <div class="container">
+        <h1> YWEATHER </h1>
+        
+        <input id="getCity">Click the button </p>
+        <button type="submit" id="buttonCity"> weatherrrr </button>
+    </div>
+
     <script>
         document.getElementById('getJoke').addEventListener('click', function() {
-            fetch('http://localhost/api.php')
+            fetch('http://localhost/YWeather/src/CRUD/api.php')
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('joke').textContent = JSON.stringify(data.value);
                 })
                 .catch(error => {
                     document.getElementById('joke').textContent = 'Failed to fetch a joke. Please try again later.';
+                    console.error('Error fetching the joke:', error);
+                });
+        });
+
+
+        document.getElementById('buttonCity').addEventListener('click', function() {
+            let test = document.getElementById('getCity').value
+            console.log(test)
+            fetch(`http://localhost/YWeather/src/CRUD/api.php?city=${encodeURIComponent(test)}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('buttonCity').textContent = JSON.stringify(data.value);
+                })
+                
+                .catch(error => {
+                    document.getElementById('getCity').textContent = 'Failed to fetch a joke. Please try again later.';
                     console.error('Error fetching the joke:', error);
                 });
         });

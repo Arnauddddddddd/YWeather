@@ -95,26 +95,26 @@ if (isset($_GET["route"])) {
     $segments = explode('/', trim($request_uri, characters: '/'));
 }
 
- switch ($_SERVER['REQUEST_METHOD']) {
-     case 'GET':
+switch ($_SERVER['REQUEST_METHOD']) {
+    case 'GET':
         echo get( $pdo, $segments[1] );
-         break;
-     case 'POST':
+        break;
+    case 'POST':
         echo post( $pdo );
         break;
-     case 'PUT':
+    case 'PUT':
         echo put( $pdo );
         break;
-     case 'DELETE':
+    case 'DELETE':
         echo remove( $pdo );
         break;  
-     default:
+    default:
         http_response_code(400);
         echo json_encode([
-             "status" => "error",
-             "message" => "Invalid Request",
+                "status" => "error",
+                "message" => "Invalid Request",
         ]);
         break;
- }
+}
 
 ?>

@@ -5,7 +5,7 @@ header("Content-Type: application/json");
 
 
 
-function get( $pdo, $place ) {
+function getPlace( $pdo, $place ) {
     if ( empty( $place ) ) {
         $stmt = $pdo->prepare("SELECT * FROM Place");
         $stmt->execute();
@@ -119,7 +119,7 @@ function processRequest($pdo, $segments) {
             if ($segments[1] == "suggest") {
                 echo suggest($pdo, $segments[2]);
             } else {
-                echo get($pdo, $segments[1]);
+                echo getPlace($pdo, $segments[1]);
             }
             break;
         case 'POST':

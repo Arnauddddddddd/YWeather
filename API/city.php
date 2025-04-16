@@ -9,6 +9,10 @@ $path = str_replace(dirname($script_name), '', $request_uri);
 $segments = explode('/', trim($path, '/'));
 
 $cityName = $segments[2];
-echo get($pdo, $cityName);
+$city = getPlace($pdo, $cityName);
+
+var_dump($city);
+
+
 
 ?>

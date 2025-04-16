@@ -18,7 +18,7 @@ RewriteRule ^city/([^/]+)/?$ API/city.php?city=$1 [QSA,L]
 # Règle générique pour les autres requêtes
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ API/index.php?route=$1 [QSA,L]
+RewriteRule ^(.*)$ API/crud.php?route=$1 [QSA,L]
 
 # Configuration CORS pour permettre les requêtes cross-origin
 <IfModule mod_headers.c>

@@ -1,6 +1,6 @@
 <?php 
 
-require_once "index.php";
+require_once "crud.php";
 
 $request_uri = $_SERVER['REQUEST_URI'];
 $script_name = $_SERVER['SCRIPT_NAME'];

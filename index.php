@@ -70,7 +70,9 @@
                         document.getElementById('City').textContent = 'Failed to fetch a city.';
                         return;
                     }
-                    document.getElementById('City').textContent = JSON.stringify(data.value);
+                    let cityName = data.value[0].name;
+                    console.log(cityName);
+                    window.location.href = `/YWeather/city/${encodeURIComponent(cityName)}`;
                 })
                 
                 .catch(error => {

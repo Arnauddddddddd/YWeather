@@ -45,44 +45,78 @@
 <body>
     <div class="container">
         <h1> YWEATHER </h1>
-        <p id="joke">Click the button </p>
-        <button id="getJoke"> weatherrrr </button>
-    </div>
-
-
-    <div class="container">
-        <h1> YWEATHER </h1>
         
-        <input id="getCity">Click the button </p>
+        <input type="text" id="getCity" placeholder="Entrez une ville" autocomplete="off" />
+        <div id="suggestions" style="border: 1px solid #ccc; display: none;"></div>
+
         <button type="submit" id="buttonCity"> weatherrrr </button>
+
+        <p id="City"> </p>
     </div>
 
     <script>
-        document.getElementById('getJoke').addEventListener('click', function() {
-            fetch('http://localhost/YWeather/API/index.php')
+        document.getElementById('buttonCity').addEventListener('click', function() {
+            let city = document.getElementById('getCity').value
+            const suggestions = document.getElementById('suggestions');
+            if (!city) {
+                document.getElementById('City').textContent = 'Failed to fetch a city.';
+                return;
+            }
+            fetch(`http://localhost/YWeather/${encodeURIComponent(city)}`)
                 .then(response => response.json())
                 .then(data => {
-                    document.getElementById('joke').textContent = JSON.stringify(data.value);
+                    console.log(data);
+                    if (Array.isArray(data.value) && data.value.length === 0) {
+                        document.getElementById('City').textContent = 'Failed to fetch a city.';
+                        return;
+                    }
+                    document.getElementById('City').textContent = JSON.stringify(data.value);
                 })
+                
                 .catch(error => {
-                    document.getElementById('joke').textContent = 'Failed to fetch a joke. Please try again later.';
+                    document.getElementById('getCity').textContent = 'Failed to fetch a city.';
                     console.error('Error fetching the joke:', error);
                 });
         });
 
+        
+    </script>
+    <script>
+        const input = document.getElementById('getCity');
+        const suggestions = document.getElementById('suggestions');
 
-        document.getElementById('buttonCity').addEventListener('click', function() {
-            let test = document.getElementById('getCity').value
-            console.log(test)
-            fetch(`http://localhost/YWeather/API/index.php?city=${encodeURIComponent(test)}`)
-                .then(response => response.json())
+        input.addEventListener('input', () => {
+            const query = input.value.trim();
+
+            if (query.length < 2) {
+                suggestions.style.display = 'none';
+                return;
+            }
+            let url = `http://localhost/YWeather/suggest/${encodeURIComponent(query)}`
+            console.log(url);  
+            fetch(url)
+                .then(res => res.json())
                 .then(data => {
-                    document.getElementById('buttonCity').textContent = JSON.stringify(data.value);
+                    suggestions.innerHTML = '';
+                    if (data.status === "success" && data.value.length > 0) {
+                        data.value.forEach(city => {
+                            const div = document.createElement('div');
+                            div.textContent = city.name;
+                            div.style.cursor = "pointer";
+                            div.onclick = () => {
+                                input.value = city.name;
+                                suggestions.style.display = 'none';
+                            };
+                            suggestions.appendChild(div);
+                        });
+                        suggestions.style.display = 'block';
+                    } else {
+                        suggestions.style.display = 'none';
+                    }
                 })
-                
-                .catch(error => {
-                    document.getElementById('getCity').textContent = 'Failed to fetch a joke. Please try again later.';
-                    console.error('Error fetching the joke:', error);
+                .catch(err => {
+                    console.error("Erreur autocomplétion:", err);
+                    suggestions.style.display = 'none';
                 });
         });
     </script>

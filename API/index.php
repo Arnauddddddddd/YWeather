@@ -45,6 +45,7 @@ function post( $pdo ) {
      }
 }
 
+
 function put( $pdo ) {
     $jsonData = file_get_contents('php://input');
     $data = json_decode($jsonData, true);
@@ -89,32 +90,52 @@ function remove( $pdo ) {
         "status" => "success",
     ]);
 }
-$segments = null;
-if (isset($_GET["route"])) {
-    $request_uri = $_GET["route"];
-    $segments = explode('/', trim($request_uri, characters: '/'));
+
+function suggest($pdo, $start) {
+    $stmt = $pdo->prepare("SELECT name FROM Place WHERE name LIKE :start LIMIT 5");
+    $stmt->execute(['start' => $start . '%']);
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    http_response_code(200);
+    return json_encode([
+        "status" => "success",
+        "value" => $results
+    ]);
+}
+
+$request_uri = $_SERVER['REQUEST_URI'];
+$script_name = $_SERVER['SCRIPT_NAME'];
+
+$path = str_replace(dirname($script_name), '', $request_uri);
+$segments = explode('/', trim($path, '/'));
+if (isset($segments[1])) {
+    $city = $segments[1];
 }
 
 switch ($_SERVER['REQUEST_METHOD']) {
-    case 'GET':
-        echo get( $pdo, $segments[1] );
+     case 'GET':
+        if ($segments[1] == "suggest") {
+            echo suggest($pdo, $segments[2]);
+        } else {
+            echo get($pdo, $segments[1]);
+        }
         break;
-    case 'POST':
+     case 'POST':
         echo post( $pdo );
         break;
-    case 'PUT':
+     case 'PUT':
         echo put( $pdo );
         break;
-    case 'DELETE':
+     case 'DELETE':
         echo remove( $pdo );
         break;  
-    default:
+     default:
         http_response_code(400);
         echo json_encode([
-                "status" => "error",
-                "message" => "Invalid Request",
+             "status" => "error",
+             "message" => "Invalid Request",
         ]);
         break;
-}
+ }
 
 ?>

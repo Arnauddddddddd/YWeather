@@ -112,30 +112,38 @@ if (isset($segments[1])) {
     $city = $segments[1];
 }
 
-switch ($_SERVER['REQUEST_METHOD']) {
-     case 'GET':
-        if ($segments[1] == "suggest") {
-            echo suggest($pdo, $segments[2]);
-        } else {
-            echo get($pdo, $segments[1]);
-        }
-        break;
-     case 'POST':
-        echo post( $pdo );
-        break;
-     case 'PUT':
-        echo put( $pdo );
-        break;
-     case 'DELETE':
-        echo remove( $pdo );
-        break;  
-     default:
-        http_response_code(400);
-        echo json_encode([
-             "status" => "error",
-             "message" => "Invalid Request",
-        ]);
-        break;
- }
+
+function processRequest($pdo, $segments) {
+    switch ($_SERVER['REQUEST_METHOD']) {
+        case 'GET':
+            if ($segments[1] == "suggest") {
+                echo suggest($pdo, $segments[2]);
+            } else {
+                echo get($pdo, $segments[1]);
+            }
+            break;
+        case 'POST':
+            echo post( $pdo );
+            break;
+        case 'PUT':
+            echo put( $pdo );
+            break;
+        case 'DELETE':
+            echo remove( $pdo );
+            break;  
+        default:
+            http_response_code(400);
+            echo json_encode([
+                "status" => "error",
+                "message" => "Invalid Request",
+            ]);
+            break;
+    }
+}
+
+
+if (basename($_SERVER['SCRIPT_FILENAME']) == basename(__FILE__)) {
+    echo processRequest($pdo, $segments);
+}
 
 ?>

@@ -1,8 +1,6 @@
 <?php 
 
-ob_start();
 require_once "index.php";
-ob_end_clean();
 
 $request_uri = $_SERVER['REQUEST_URI'];
 $script_name = $_SERVER['SCRIPT_NAME'];

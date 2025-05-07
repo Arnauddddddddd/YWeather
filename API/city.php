@@ -1,22 +1,319 @@
-<?php 
-
-require_once "crud.php";
-require_once "crudPlace.php";
-require_once "../src/db/db.php";
-
-$request_uri = $_SERVER['REQUEST_URI'];
-$script_name = $_SERVER['SCRIPT_NAME'];
-
-$path = str_replace(dirname($script_name), '', $request_uri);
-$segments = explode('/', trim($path, '/'));
-
-$cityName = $segments[2];
-$city = getPlace($pdo, $cityName);
-$cityArray = json_decode($city, true)["value"][0] ?? null;
-$cityId = (int) $cityArray["place_id"] ?? null;
-
-var_dump(getLastWeathersByPlace($pdo, 24,$cityId)); // Example usage
 
 
 
-?>
+<html lang="fr">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> YWEATHER </title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap" rel="stylesheet">
+
+    <script src="result.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/city.css">
+
+</head>
+
+<body>
+
+    <?php 
+        require_once dirname(__DIR__) . '/API/crud.php';
+        require_once dirname(__DIR__) . '/API/crudPlace.php';
+        require_once dirname(__DIR__) . '../src/db/db.php';
+
+   
+        $request_uri = $_SERVER['REQUEST_URI'];
+        $script_name = $_SERVER['SCRIPT_NAME'];
+
+        $path = str_replace(dirname($script_name), '', $request_uri);
+        $segments = explode('/', trim($path, '/'));
+
+        $cityName = $segments[2];
+        $city = getPlace($pdo, $cityName);
+        $cityArray = json_decode($city, true)["value"][0] ?? null;
+        $cityId = (int) $cityArray["place_id"] ?? null;
+
+        //var_dump(getLastWeathersByPlace($pdo, 24,$cityId)); // Example usage 
+    ?>
+
+    <div id="follower"></div>
+
+    <nav>
+        <div class="nav">
+            <h1 class="league-spartan-600 white">YWEATHER</h1>
+            <div class="search-bar">
+                <div class="search-bar-container">
+                    <input type="search" name="" id="getCity" class="getCity" autocomplete="off" placeholder="Search for a city...">
+                    <button type="submit" id="buttonCity"> <i class="fas fa-search"></i> </button>
+                </div>
+                <div id="suggestions" style="border: 1px solid #ccc; display: none;"></div>
+            </div>
+            <h3 class="league-spartan-600 white">About</h3>
+        </div>
+    </nav>
+
+    <div class="landing" id="landing">
+
+        <div class="inv"></div>
+
+        <div class="container league-spartan-400">
+            <div class="sentence">
+                <p class="white loadAnimationTop invisible">What a good day in </p>
+                <p class="city loadAnimationTop2 invisible"> <?php echo $cityName ?> </p>
+            </div>
+            <p class="temp league-spartan-600 white fadeIn invisible">11°</p>
+        </div>
+
+        <script>
+            document.getElementById('buttonCity').addEventListener('click', function() {
+                let city = document.getElementById('getCity').value
+                const suggestions = document.getElementById('suggestions');
+                if (!city) {
+                    document.getElementById('City').textContent = 'Failed to fetch a city.';
+                    return;
+                }
+                fetch(`http://localhost/YWeather/${encodeURIComponent(city)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        if (Array.isArray(data.value) && data.value.length === 0) {
+                            document.getElementById('City').textContent = 'Failed to fetch a city.';
+                            return;
+                        }
+                        let cityName = data.value[0].name;
+                        console.log(cityName);
+                        window.location.href = `/YWeather/city/${encodeURIComponent(cityName)}`;
+                    })
+                    
+                    .catch(error => {
+                        document.getElementById('getCity').textContent = 'Failed to fetch a city.';
+                        console.error('Error fetching the joke:', error);
+                    });
+            });
+    
+            
+        </script>
+        <script>
+            const input = document.getElementById('getCity');
+            const suggestions = document.getElementById('suggestions');
+    
+            input.addEventListener('input', () => {
+                const query = input.value.trim();
+    
+                if (query.length < 2) {
+                    suggestions.style.display = 'none';
+                    return;
+                }
+                let url = `http://localhost/YWeather/suggest/${encodeURIComponent(query)}`
+                console.log(url);  
+                fetch(url)
+                    .then(res => res.json())
+                    .then(data => {
+                        suggestions.innerHTML = '';
+                        if (data.status === "success" && data.value.length > 0) {
+                            data.value.forEach(city => {
+                                const div = document.createElement('div');
+                                div.textContent = city.name;
+                                div.style.cursor = "pointer";
+                                div.onclick = () => {
+                                    input.value = city.name;
+                                    suggestions.style.display = 'none';
+                                };
+                                suggestions.appendChild(div);
+                            });
+                            suggestions.style.display = 'block';
+                        } else {
+                            suggestions.style.display = 'none';
+                        }
+                    })
+                    .catch(err => {
+                        console.error("Erreur autocomplétion:", err);
+                        suggestions.style.display = 'none';
+                    });
+            });
+        </script>
+
+
+        <img class="clouds loadAnimationBottom" src="assets/Clouds4.png" alt="">
+
+
+
+
+        <div class="bento-container">
+            <!-- Carte principale météo actuelle -->
+            <div class="bento-card main-weather">
+                <div class="main-weather-top">
+                    <div class="glass">
+                        <div class="main-temp">24°</div>
+                        <div class="main-condition">Ensoleillé</div>
+                    </div>
+                    <img class="main-icon soleil" src="assets/soleil.png" alt="">
+                </div>
+                <div class="main-weather-bottom">
+                    <div>
+                        <div class="main-location">Paris</div>
+                        <div class="main-time">Mercredi, 15:30</div>
+                    </div>
+                    <div>
+                        <div class="info-title white">Ressenti</div>
+                        <div class="info-value white">26°</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Carte vent -->
+            <div class="bento-card wind-card">
+                <div class="info-icon">💨</div>
+                <div>
+                    <div class="info-title">Vent</div>
+                    <div class="info-value">12 km/h</div>
+                    <div class="info-desc">Nord-Est</div>
+                </div>
+            </div>
+            
+            <!-- Carte humidité -->
+            <div class="bento-card humidity-card">
+                <div class="info-icon">💧</div>
+                <div>
+                    <div class="info-title">Humidité</div>
+                    <div class="info-value">45%</div>
+                    <div class="info-desc">Normale</div>
+                </div>
+            </div>
+            
+            <!-- Prévision horaire -->
+            <div class="bento-card hourly-forecast">
+                <div class="hour-card">
+                    <div class="hour-time">15:00</div>
+                    <img class="icon" src="assets/soleil.png" alt="">
+                    <div class="hour-temp">24°</div>
+                </div>
+                <div class="hour-card">
+                    <div class="hour-time">16:00</div>
+                    <img class="icon" src="assets/soleil.png" alt="">
+                    <div class="hour-temp">25°</div>
+                </div>
+                <div class="hour-card">
+                    <div class="hour-time">17:00</div>
+                    <img class="icon" src="assets/nuageux.png" alt="">
+                    <div class="hour-temp">24°</div>
+                </div>
+                <div class="hour-card">
+                    <div class="hour-time">18:00</div>
+                    <img class="icon" src="assets/nuageux.png" alt="">
+                    <div class="hour-temp">22°</div>
+                </div>
+                <div class="hour-card">
+                    <div class="hour-time">19:00</div>
+                    <img class="icon" src="assets/nuageux.png" alt="">
+                    <div class="hour-temp">21°</div>
+                </div>
+                <div class="hour-card">
+                    <div class="hour-time">20:00</div>
+                    <div class="hour-icon">🌙</div>
+                    <div class="hour-temp">20°</div>
+                </div>
+                <div class="hour-card">
+                    <div class="hour-time">21:00</div>
+                    <div class="hour-icon">🌙</div>
+                    <div class="hour-temp">19°</div>
+                </div>
+                <div class="hour-card">
+                    <div class="hour-time">22:00</div>
+                    <div class="hour-icon">🌙</div>
+                    <div class="hour-temp">18°</div>
+                </div>
+            </div>
+            
+            <!-- Prévision quotidienne -->
+            <div class="bento-card daily-forecast">
+
+                <div class="day-card">
+                    <div class="day-name">Mer</div>
+                    <div class="day-icon">☀️</div>
+                    <div class="day-temp">
+                        <span class="day-high">25°</span>
+                        <span class="white">|</span>
+                        <span class="day-low">16°</span>
+                    </div>
+                </div>
+                <div class="day-card">
+                    <div class="day-name">Jeu</div>
+                    <div class="day-icon">⛅</div>
+                    <div class="day-temp">
+                        <span class="day-high">24°</span>
+                        <span class="white">|</span>
+                        <span class="day-low">15°</span>
+                    </div>
+                </div>
+                <div class="day-card">
+                    <div class="day-name">Ven</div>
+                    <div class="day-icon">🌦️</div>
+                    <div class="day-temp">
+                        <span class="day-high">22°</span>
+                        <span class="white">|</span>
+                        <span class="day-low">14°</span>
+                    </div>
+                </div>
+                <div class="day-card">
+                    <div class="day-name">Sam</div>
+                    <div class="day-icon">🌧️</div>
+                    <div class="day-temp">
+                        <span class="day-high">19°</span>
+                        <span class="white">|</span>
+                        <span class="day-low">13°</span>
+                    </div>
+                </div>
+                <div class="day-card">
+                    <div class="day-name">Dim</div>
+                    <div class="day-icon">🌤️</div>
+                    <div class="day-temp">
+                        <span class="day-high">21°</span>
+                        <span class="white">|</span>
+                        <span class="day-low">12°</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.fog.min.js"></script>
+    <script>
+    VANTA.FOG({
+      el: "#landing",
+      mouseControls: true,
+      touchControls: true,
+      gyroControls: false,
+      minHeight: 200.00,
+      minWidth: 200.00,
+      highlightColor: 0x8de2ff,
+      midtoneColor: 0x6fc9ff,
+      lowlightColor: 0x3f91ff,
+      baseColor: 0x4979ff,
+      blurFactor: 0.90,
+      speed: 2.70,
+      zoom: 0.40
+    })
+    </script>
+
+    
+    <div class="main">
+
+        
+
+    </div>
+</body>
+</html>
+
+

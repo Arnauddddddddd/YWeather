@@ -1,8 +1,6 @@
 <?php
 require_once "../src/db/db.php";
 
-header("Content-Type: application/json");
-
 
 
 function getPlace( $pdo, $place ) {

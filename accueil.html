@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><!-- TODO : METTRE .php  -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=League+Spartan:wght@100..900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="accueil.css">
+
+    <script src="https://kit.fontawesome.com/ea8060e81f.js" crossorigin="anonymous"></script>
+    
+    <title> YWEATHER </title>
+
+</head>
+
+<body>
+
+    <div id="follower"></div>
+
+    <nav>
+        <div class="nav">
+            <h1 class="league-spartan-600 grey">YWEATHER</h1>
+            
+            <h3 class="league-spartan-600 grey">About</h3>
+        </div>
+    </nav>
+
+    <div class="landing" id="landing">
+
+        <div class="div-main-content">
+            <div class="div">
+                <h1 class="main-text"> Wanna look closer to our </br> beautiful api ! </h1>
+            </div>
+    
+            <div class="div">
+                <form action="" method="get">
+                    <button type="submit"> <img src="assets/loupe_blanche.png" alt="" srcset=""> </button>
+                    <input type="text" name="id" placeholder="Search for a city ...">
+                </form>
+            </div>
+        </div>
+ 
+    </div>
+
+    <script>
+        // document.getElementById('getJoke').addEventListener('click', function() {
+        //     fetch('http://localhost/api.php')
+        //         .then(response => response.json())
+        //         .then(data => {
+        //             document.getElementById('joke').textContent = JSON.stringify(data.value);
+        //         })
+        //         .catch(error => {
+        //             document.getElementById('joke').textContent = 'Failed to fetch a joke. Please try again later.';
+        //             console.error('Error fetching the joke:', error);
+        //         });
+        // });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.fog.min.js"></script>
+    <script>
+    VANTA.FOG({
+        el: "#landing",
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200.00,
+        minWidth: 200.00,
+        highlightColor: 0x4788ff,
+        midtoneColor: 0x7294ff,
+        lowlightColor: 0x283ee0,
+        baseColor: 0x242dbd,
+        blurFactor: 0.90,
+        speed: 2.70,
+        zoom: 0.40
+    })
+    </script>
+
+</body>
+</html>

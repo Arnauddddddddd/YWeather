@@ -24,41 +24,117 @@
 }
 
 
+#follower {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    pointer-events: none;
+    transform: translate(-50%, -50%); /* Pour centrer l'élément sur le curseur */
+    z-index: 3;
+    pointer-events: none;
+  }
+
 
 * {
     margin: 0;
     padding: 0;
+    cursor: none;
+    
     
 }
 
 body {
     /* background: linear-gradient(180deg, rgba(75, 90, 107, 1) 0%, rgba(9, 23, 39, 1) 30%, rgba(45, 59, 78, 1) 70%); */
-    background: linear-gradient(180deg, rgb(71, 78, 87) 0%, rgb(18, 32, 50) 30%, rgb(152, 175, 192) 50%);
+    /*background: linear-gradient(180deg, rgb(71, 78, 87) 0%, rgb(18, 32, 50) 30%, rgb(152, 175, 192) 50%);*/
     height: 3000px;
     overflow-x: hidden;
+    width: 100vw;
 }
 
 
 
 nav {
-    display: flex;
-    justify-content: space-between;
-    position: fixed;
+    position: absolute;
     width: 100%;
     z-index: 2;
+    height: 5vh;
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /*background-color: rgba(0, 0, 0, 0.5);*/
+    height: 90%;
+    margin: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+}
+
+.search-bar {
+    display: flex;
+    gap: 10px;
+}
+
+.search-bar-container {
+    position: relative;
+    display: inline-block;
+}
+
+
+#getCity {
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 1);
+    border-radius: 8px;
+    padding: 15px;
+    width: 20vw;
+    border: none;
+    cursor: pointer;
+    outline: none;
+
+
+    /*box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.4), 12px 16px 32px rgba(75, 107, 183, 0.5), inset -2px -2px 4px rgba(0, 0, 0, 0.2);*/
+
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+
+    background-image: url('assets/noise.png'); /* Remplacez par le chemin de votre image */
+    background-size: cover; /* Ajuste la taille de l'image */
+    background-blend-mode: overlay; /* Mélange la texture avec la couleur de fond */
+}
+
+#getCity::placeholder {
+    color: rgba(255, 255, 255, 1);
+}
+
+#buttonCity {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background-color: none;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 1);
 }
 
 .landing {
-    height: 102vh;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding-top: 7vh;
+    justify-content: start;
+    /*background: linear-gradient(180deg, rgb(58, 120, 190) 0%, rgb(80, 153, 255) 70%);*/
+    gap: 2vh;
 }
 
 .inv {
-    height: 30vh;
+    height: 15vh;
 }
 
 .container {
@@ -79,7 +155,8 @@ nav {
 }
 
 .container .city {
-    background: linear-gradient(110deg, rgb(195, 123, 232) 0%, rgba(0, 132, 255, 1) 100%);
+    /*background: linear-gradient(110deg, rgb(195, 123, 232) 0%, rgba(0, 132, 255, 1) 100%);*/
+    background: linear-gradient(110deg, rgb(81, 255, 101) 0%, rgb(248, 255, 38) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -95,8 +172,13 @@ nav {
 }
 
 .clouds {
-    transform: translateY(-50%);
-    z-index: 0;
+    /*transform: translateY(-50%);*/
+    z-index: 1;
+    position: absolute;
+    bottom: -100px;
+    left: -200px;
+    pointer-events: none;
+    
 }
 
 
@@ -160,13 +242,12 @@ nav {
 
   .cointainer-hours {
     /*background-color: red;*/
-    height: 20vh;
+    height: 15vh;
     width: 100%;
     z-index: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    transform: translateY(-50%);
 }
 
 

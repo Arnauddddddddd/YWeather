@@ -15,8 +15,7 @@ $city = getPlace($pdo, $cityName);
 $cityArray = json_decode($city, true)["value"][0] ?? null;
 $cityId = (int) $cityArray["place_id"] ?? null;
 
-var_dump(getWeatherByPlaceAndTime($pdo, $cityId, 5)); // Example usage
-var_dump(getLast24WeathersByPlace($pdo, $cityId)); // Example usage
+var_dump(getLastWeathersByPlace($pdo, 24,$cityId)); // Example usage
 
 
 

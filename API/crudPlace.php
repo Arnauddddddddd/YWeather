@@ -23,7 +23,8 @@ function getWeatherByPlaceAndTime($pdo, int $placeId, int $timeId): ?array {
     }
 }
 
-function getLast24WeathersByPlace(PDO $pdo, int $placeId): array {
+function getLastWeathersByPlace(PDO $pdo, int $nbr, int $placeId): array {
+    $nbr = (int)$nbr;
     $sql = "
         SELECT weather.*
         FROM place_time_weather
@@ -31,7 +32,7 @@ function getLast24WeathersByPlace(PDO $pdo, int $placeId): array {
         INNER JOIN time ON place_time_weather.time_id = time.time_id
         WHERE place_time_weather.place_id = :placeId
         ORDER BY time.time_id DESC
-        LIMIT 24
+        LIMIT $nbr
     ";
 
     try {

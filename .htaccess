@@ -1,0 +1,36 @@
+# Activer le moteur de réécriture
+RewriteEngine On
+
+# Base du répertoire pour la réécriture
+RewriteBase /YWeather/
+
+# Bloquer l'accès direct à city.php
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\s/+YWeather/city\.php [NC]
+RewriteRule ^ - [F,L]
+
+# Règles de réécriture spécifiques
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^city/([^/]+)/?$ API/city.php?city=$1 [QSA,L]
+
+# Ici vous pouvez ajouter d'autres règles spécifiques si nécessaire
+
+# Règle générique pour les autres requêtes
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ API/crud.php?route=$1 [QSA,L]
+
+# Configuration CORS pour permettre les requêtes cross-origin
+<IfModule mod_headers.c>
+    Header Set Access-Control-Allow-Origin "*"
+    Header Set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+    Header Set Access-Control-Allow-Headers "Content-Type, Authorization"
+</IfModule>
+
+# Désactiver l'affichage des index de répertoire
+Options -Indexes
+
+# Protection des fichiers sensibles
+<FilesMatch "\.(env|htaccess|ini|log|sh|bak|sql)$">
+    Require all denied
+</FilesMatch>

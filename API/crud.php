@@ -1,29 +1,33 @@
 <?php
-require_once "db.php";
+require_once "../src/db/db.php";
 
 header("Content-Type: application/json");
 
 
 
-function get( $pdo, $id ) {
-    if ( empty( $id ) ) {
+function getPlace( $pdo, $place ) {
+    if ( empty( $place ) ) {
         $stmt = $pdo->prepare("SELECT * FROM Place");
         $stmt->execute();
-    } else {
+    } else if ( $place == (int) $place ) {
         $stmt = $pdo->prepare("SELECT * FROM Place WHERE place_id = :place_id");
-        $stmt->execute( [ 'place_id' => $id ] );
+        $stmt->execute( [ 'place_id' => $place ] );
+    } else {
+        $stmt = $pdo->prepare("SELECT * FROM Place WHERE name = :name");
+        $stmt->execute( [ 'name' => $place ] );
     }
     
-    $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $places = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     http_response_code(200);
     return json_encode([
         "status" => "success",
-        "value" => $users,
+        "value" => $places,
     ]);
 }
 
 function post( $pdo ) {
+    $jsonData = file_get_contents('php://input');
     $data = json_decode($jsonData, true);
     if ($data !== null) {
         $name = $data['name'];
@@ -41,7 +45,8 @@ function post( $pdo ) {
      }
 }
 
-function put( $pdo ) {  
+
+function put( $pdo ) {
     $jsonData = file_get_contents('php://input');
     $data = json_decode($jsonData, true);
 
@@ -86,27 +91,59 @@ function remove( $pdo ) {
     ]);
 }
 
-switch ($_SERVER['REQUEST_METHOD']) {
-    case 'GET':
-        echo get( $pdo, isset($_GET['id']) );
-        break;
-    case 'POST':
-        echo post( $pdo );
-        break;
-    case 'PUT':
-        echo put( $pdo );
-        break;
-    case 'DELETE':
-        echo remove( $pdo );
-        break;
-    
-    default:
-        http_response_code(400);
-        echo json_encode([
-            "status" => "error",
-            "message" => "Invalid Request",
-        ]);
-        break;
+function suggest($pdo, $start) {
+    $stmt = $pdo->prepare("SELECT name FROM Place WHERE name LIKE :start LIMIT 5");
+    $stmt->execute(['start' => $start . '%']);
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    http_response_code(200);
+    return json_encode([
+        "status" => "success",
+        "value" => $results
+    ]);
+}
+
+$request_uri = $_SERVER['REQUEST_URI'];
+$script_name = $_SERVER['SCRIPT_NAME'];
+
+$path = str_replace(dirname($script_name), '', $request_uri);
+$segments = explode('/', trim($path, '/'));
+if (isset($segments[1])) {
+    $city = $segments[1];
+}
+
+
+function processRequest($pdo, $segments) {
+    switch ($_SERVER['REQUEST_METHOD']) {
+        case 'GET':
+            if ($segments[1] == "suggest") {
+                echo suggest($pdo, $segments[2]);
+            } else {
+                echo getPlace($pdo, $segments[1]);
+            }
+            break;
+        case 'POST':
+            echo post( $pdo );
+            break;
+        case 'PUT':
+            echo put( $pdo );
+            break;
+        case 'DELETE':
+            echo remove( $pdo );
+            break;  
+        default:
+            http_response_code(400);
+            echo json_encode([
+                "status" => "error",
+                "message" => "Invalid Request",
+            ]);
+            break;
+    }
+}
+
+
+if (basename($_SERVER['SCRIPT_FILENAME']) == basename(__FILE__)) {
+    echo processRequest($pdo, $segments);
 }
 
 ?>

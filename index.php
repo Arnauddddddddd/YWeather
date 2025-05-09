@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=League+Spartan:wght@100..900&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="assets/css/index.css">
 
     <script src="https://kit.fontawesome.com/ea8060e81f.js" crossorigin="anonymous"></script>
     <script src="result.js"></script>
@@ -41,12 +41,17 @@
             </div>
     
             <div class="div">
-                <div class="search-bar">
-                    <button type="submit" id="buttonCity"> <img src="assets/loupe_blanche.png" alt="" srcset=""> </button>
-                    <div id="suggestions" style="border: 1px solid #ccc; display: none;"></div>
-                    <input type="text" name="id" id="getCity" placeholder="Search for a city ...">
+                <div>
+                    <div class="search-bar">
+                        <button type="submit" id="buttonCity"> <img src="assets/loupe_blanche.png" alt="" srcset=""> </button>
+                        <input type="text" name="id" id="getCity" placeholder="Search for a city ...">
+                    </div>
+                    <div id="suggestions" class="suggestions"></div>
                 </div>
+                
+
             </div>
+
         </div>
  
     </div>
@@ -74,6 +79,8 @@
                     })
                     
                     .catch(error => {
+                        console.log(`URL being fetched: http://localhost/YWeather/${(city)}`);
+
                         document.getElementById('getCity').textContent = 'Failed to fetch a city.';
                         console.error('Error fetching the joke:', error);
                     });

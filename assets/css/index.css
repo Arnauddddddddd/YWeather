@@ -105,6 +105,18 @@ nav {
     padding-bottom: 12%;
 }
 
+#suggestions {
+}
+
+
+
+
+/* Style pour le conteneur de la barre de recherche */
+.search-bar-container {
+    position: relative;
+    width: 100%;
+}
+
 .search-bar {
     display: flex;
     align-items: center;

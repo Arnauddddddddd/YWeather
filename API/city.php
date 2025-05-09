@@ -35,11 +35,13 @@
         $segments = explode('/', trim($path, '/'));
 
         $cityName = $segments[2];
+        $cityName = urldecode($cityName);
+
         $city = getPlace($pdo, $cityName);
         $cityArray = json_decode($city, true)["value"][0] ?? null;
         $cityId = (int) $cityArray["place_id"] ?? null;
 
-        //var_dump(getLastWeathersByPlace($pdo, 24,$cityId)); // Example usage 
+        $weather = getLastWeathersByPlace($pdo, 1,$cityId)[0]; // Example usage 
     ?>
 
     <div id="follower"></div>
@@ -52,22 +54,25 @@
                     <input type="search" name="" id="getCity" class="getCity" autocomplete="off" placeholder="Search for a city...">
                     <button type="submit" id="buttonCity"> <i class="fas fa-search"></i> </button>
                 </div>
-                <div id="suggestions" style="border: 1px solid #ccc; display: none;"></div>
             </div>
             <h3 class="league-spartan-600 white">About</h3>
         </div>
     </nav>
 
+
     <div class="landing" id="landing">
 
+
         <div class="inv"></div>
+        <div id="suggestions" style="border: 1px solid #ccc; display: none;"></div>
+
 
         <div class="container league-spartan-400">
             <div class="sentence">
                 <p class="white loadAnimationTop invisible">What a good day in </p>
                 <p class="city loadAnimationTop2 invisible"> <?php echo $cityName ?> </p>
             </div>
-            <p class="temp league-spartan-600 white fadeIn invisible">11°</p>
+            <p class="temp league-spartan-600 white fadeIn invisible"><?php echo (int)$weather["temperature"] ?> °</p>
         </div>
 
         <script>
@@ -150,14 +155,14 @@
             <div class="bento-card main-weather">
                 <div class="main-weather-top">
                     <div class="glass">
-                        <div class="main-temp">24°</div>
-                        <div class="main-condition">Ensoleillé</div>
+                        <div class="main-temp"><?php echo (int)$weather["temperature"] ?>°</div>
+                        <div class="main-condition"><?php echo $weather["state"] ?></div>
                     </div>
                     <img class="main-icon soleil" src="assets/soleil.png" alt="">
                 </div>
                 <div class="main-weather-bottom">
                     <div>
-                        <div class="main-location">Paris</div>
+                        <div class="main-location"><?php echo $cityName ?></div>
                         <div class="main-time">Mercredi, 15:30</div>
                     </div>
                     <div>
@@ -172,7 +177,7 @@
                 <div class="info-icon">💨</div>
                 <div>
                     <div class="info-title">Vent</div>
-                    <div class="info-value">12 km/h</div>
+                    <div class="info-value"><?php echo (int)$weather["wind"] ?> km/h</div>
                     <div class="info-desc">Nord-Est</div>
                 </div>
             </div>
@@ -182,7 +187,7 @@
                 <div class="info-icon">💧</div>
                 <div>
                     <div class="info-title">Humidité</div>
-                    <div class="info-value">45%</div>
+                    <div class="info-value"><?php echo (int)$weather["humidity"] ?>%</div>
                     <div class="info-desc">Normale</div>
                 </div>
             </div>
@@ -191,27 +196,27 @@
             <div class="bento-card hourly-forecast">
                 <div class="hour-card">
                     <div class="hour-time">15:00</div>
-                    <img class="icon" src="assets/soleil.png" alt="">
+                    <img class="icon" src="../assets/soleil.png" alt="">
                     <div class="hour-temp">24°</div>
                 </div>
                 <div class="hour-card">
                     <div class="hour-time">16:00</div>
-                    <img class="icon" src="assets/soleil.png" alt="">
+                    <img class="icon" src="../assets/soleil.png" alt="">
                     <div class="hour-temp">25°</div>
                 </div>
                 <div class="hour-card">
                     <div class="hour-time">17:00</div>
-                    <img class="icon" src="assets/nuageux.png" alt="">
+                    <img class="icon" src="../assets/nuageux.png" alt="">
                     <div class="hour-temp">24°</div>
                 </div>
                 <div class="hour-card">
                     <div class="hour-time">18:00</div>
-                    <img class="icon" src="assets/nuageux.png" alt="">
+                    <img class="icon" src="../assets/nuageux.png" alt="">
                     <div class="hour-temp">22°</div>
                 </div>
                 <div class="hour-card">
                     <div class="hour-time">19:00</div>
-                    <img class="icon" src="assets/nuageux.png" alt="">
+                    <img class="icon" src="../assets/nuageux.png" alt="">
                     <div class="hour-temp">21°</div>
                 </div>
                 <div class="hour-card">

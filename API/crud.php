@@ -11,6 +11,7 @@ function getPlace( $pdo, $place ) {
         $stmt = $pdo->prepare("SELECT * FROM Place WHERE place_id = :place_id");
         $stmt->execute( [ 'place_id' => $place ] );
     } else {
+        $place = urldecode($place);
         $stmt = $pdo->prepare("SELECT * FROM Place WHERE name = :name");
         $stmt->execute( [ 'name' => $place ] );
     }

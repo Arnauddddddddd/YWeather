@@ -1,6 +1,6 @@
 import pandas as pd
 
-data = pd.read_csv('data/meteo-0025.csv', sep=';')
+data = pd.read_csv('meteo-0025.csv', sep=';')
 
 column_mapping = {
     'Forecast timestamp': 'forecast_timestamp',
@@ -56,4 +56,4 @@ data['day_of_week'] = data['forecast_timestamp'].dt.dayofweek
 data[['latitude', 'longitude']] = data['position'].str.split(',', expand=True).astype(float)
 
 # Save processed data before model training
-data.to_csv('data/processed_data.csv', index=False)
+data.to_csv('processed_data.csv', index=False)

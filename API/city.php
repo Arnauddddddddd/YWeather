@@ -158,7 +158,7 @@
                         <div class="main-temp"><?php echo (int)$weather["temperature"] ?>°</div>
                         <div class="main-condition"><?php echo $weather["state"] ?></div>
                     </div>
-                    <img class="main-icon soleil" src="assets/soleil.png" alt="">
+                    <img class="main-icon soleil" src="assets/images/soleil.png" alt="">
                 </div>
                 <div class="main-weather-bottom">
                     <div>
@@ -196,27 +196,27 @@
             <div class="bento-card hourly-forecast">
                 <div class="hour-card">
                     <div class="hour-time">15:00</div>
-                    <img class="icon" src="../assets/soleil.png" alt="">
+                    <img class="icon" src="../assets/images/soleil.png" alt="">
                     <div class="hour-temp">24°</div>
                 </div>
                 <div class="hour-card">
                     <div class="hour-time">16:00</div>
-                    <img class="icon" src="../assets/soleil.png" alt="">
+                    <img class="icon" src="../assets/images/soleil.png" alt="">
                     <div class="hour-temp">25°</div>
                 </div>
                 <div class="hour-card">
                     <div class="hour-time">17:00</div>
-                    <img class="icon" src="../assets/nuageux.png" alt="">
+                    <img class="icon" src="../assets/images/nuageux.png" alt="">
                     <div class="hour-temp">24°</div>
                 </div>
                 <div class="hour-card">
                     <div class="hour-time">18:00</div>
-                    <img class="icon" src="../assets/nuageux.png" alt="">
+                    <img class="icon" src="../assets/images/nuageux.png" alt="">
                     <div class="hour-temp">22°</div>
                 </div>
                 <div class="hour-card">
                     <div class="hour-time">19:00</div>
-                    <img class="icon" src="../assets/nuageux.png" alt="">
+                    <img class="icon" src="../assets/images/nuageux.png" alt="">
                     <div class="hour-temp">21°</div>
                 </div>
                 <div class="hour-card">

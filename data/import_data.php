@@ -1,8 +1,8 @@
 <?php
-require_once "src/db/db.php";
+require_once "../src/db/db.php";
 
 function importDataToDB($pdo) {
-    if (!file_exists('data/processed_data.csv')) {
+    if (!file_exists('processed_data.csv')) {
         echo "Le fichier de données traitées n'existe pas!\n";
         return false;
     }
@@ -10,11 +10,11 @@ function importDataToDB($pdo) {
     // Start transaction for better performance
     $pdo->beginTransaction();
     
-    $file = fopen('data/processed_data.csv', 'r');
+    $file = fopen('processed_data.csv', 'r');
     $header = fgetcsv($file, 0, ',');
     
     // Count total records more efficiently
-    $totalRecords = countLinesInFile('data/processed_data.csv') - 1; // Minus header
+    $totalRecords = countLinesInFile('processed_data.csv') - 1; // Minus header
     
     // Prepare column indexes once
     $colIndexes = [

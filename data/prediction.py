@@ -3,13 +3,15 @@ import time
 import numpy as np
 from datetime import datetime
 import joblib
+import json
 import os
+import sys
 
 def load_model():
     try:
         # Display model file size for debugging
-        model_path = 'data/model/weather_model.pkl'
-        encoder_path = 'data/model/encoder_commune.pkl'
+        model_path = '../data/model/weather_model.pkl'
+        encoder_path = '../data/model/encoder_commune.pkl'
             
         model = joblib.load(model_path)
         encoder = joblib.load(encoder_path)
@@ -123,18 +125,13 @@ def display_weather(weather_data):
 
 # Example usage
 if __name__ == "__main__":
-    # Predict with known temperature
-    print("\nPrediction with known temperature:")
-    weather1 = predict_weather(commune="Paris", input_temperature=25.0)
-    display_weather(weather1)
-    
-    # Predict for current time and different location
-    print("\nPrediction for different location:")
-    weather2 = predict_weather(commune="Paris", date_str="2027-07-15 14:00:00", input_temperature=35.0)
-    display_weather(weather2)
-    
-    # Predict with coordinates
-    print("\nPrediction with coordinates:")
-    weather3 = predict_weather(commune="Spycker", lat=43.2965, lon=5.3698, input_temperature=28.5)
-    display_weather(weather3)
+    phpCity = sys.argv[1] if len(sys.argv) > 1 else None
+    phpDate = sys.argv[2] if len(sys.argv) > 2 else None
+    phpLat = sys.argv[3] if len(sys.argv) > 3 else None
+    phpLon = sys.argv[4] if len(sys.argv) > 4 else None
+    phpTemperature = sys.argv[5] if len(sys.argv) > 5 else None
+
+    #weather3 = predict_weather(commune="Strasbourg", lat=48.55, lon=1.85, input_temperature=28.5)
+    weather = predict_weather(commune=phpCity, lat=phpLat, lon=phpLon, date_str=phpDate, input_temperature=phpTemperature)
+    print(json.dumps(weather))
 

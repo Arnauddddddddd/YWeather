@@ -44,4 +44,16 @@ function getLastWeathersByPlace(PDO $pdo, int $nbr, int $placeId): array {
     }
 }
 
+
+function getLatLongByPlace(PDO $pdo, int $placeId): ?array {
+    $sql = "SELECT latitude, longitude FROM place WHERE place_id = :placeId";
+    try {
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([':placeId' => $placeId]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        return null;
+    }
+}
+
 ?>

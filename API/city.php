@@ -26,6 +26,7 @@
         require_once dirname(__DIR__) . '/API/crud.php';
         require_once dirname(__DIR__) . '/API/crudPlace.php';
         require_once dirname(__DIR__) . '../src/db/db.php';
+        require_once dirname(__DIR__) . '/API/prediction.php';
 
    
         $request_uri = $_SERVER['REQUEST_URI'];
@@ -33,7 +34,6 @@
 
         $path = str_replace(dirname($script_name), '', $request_uri);
         $segments = explode('/', trim($path, '/'));
-
         $cityName = $segments[2];
         $cityName = urldecode($cityName);
 
@@ -41,7 +41,17 @@
         $cityArray = json_decode($city, true)["value"][0] ?? null;
         $cityId = (int) $cityArray["place_id"] ?? null;
 
-        $weather = getLastWeathersByPlace($pdo, 1,$cityId)[0]; // Example usage 
+        $coords = getLatLongByPlace($pdo, $cityId);
+        $lat = $coords["latitude"];
+        $long = $coords["longitude"];
+
+        $weather = getLastWeathersByPlace($pdo, 1,$cityId)[0]; // Example usage
+        $predictionDay1 = getPrediction($cityName, date("Y-m-d"), $lat, $long, $weather["temperature"]);
+        $predictionDay2 = getPrediction($cityName, date("Y-m-d", strtotime("+1 day")), $lat, $long, $weather["temperature"]);
+        $predictionDay3 = getPrediction($cityName, date("Y-m-d", strtotime("+2 day")), $lat, $long, $weather["temperature"]);
+        // $predictionDay4 = getPrediction($cityName, date("Y-m-d", strtotime("+3 day")), $lat, $long, $weather["temperature"]);
+        // $predictionDay5 = getPrediction($cityName, date("Y-m-d", strtotime("+4 day")), $lat, $long, $weather["temperature"]);
+        // $predictionDay6 = getPrediction($cityName, date("Y-m-d", strtotime("+5 day")), $lat, $long, $weather["temperature"]);
     ?>
 
     <div id="follower"></div>
@@ -72,7 +82,7 @@
                 <p class="white loadAnimationTop invisible">What a good day in </p>
                 <p class="city loadAnimationTop2 invisible"> <?php echo $cityName ?> </p>
             </div>
-            <p class="temp league-spartan-600 white fadeIn invisible"><?php echo (int)$weather["temperature"] ?> °</p>
+            <p class="temp league-spartan-600 white fadeIn invisible"><?php echo (int)$predictionDay1["weather"]["temperature_2m"] ?> °</p>
         </div>
 
         <script>
@@ -155,7 +165,7 @@
             <div class="bento-card main-weather">
                 <div class="main-weather-top">
                     <div class="glass">
-                        <div class="main-temp"><?php echo (int)$weather["temperature"] ?>°</div>
+                        <div class="main-temp"><?php echo (int)$predictionDay1["weather"]["temperature_2m"] ?>°</div>
                         <div class="main-condition"><?php echo $weather["state"] ?></div>
                     </div>
                     <img class="main-icon soleil" src="assets/images/soleil.png" alt="">
@@ -163,11 +173,11 @@
                 <div class="main-weather-bottom">
                     <div>
                         <div class="main-location"><?php echo $cityName ?></div>
-                        <div class="main-time">Mercredi, 15:30</div>
+                        <div class="main-time"> <?php echo date("Y-m-d") ?> </div>
                     </div>
                     <div>
                         <div class="info-title white">Ressenti</div>
-                        <div class="info-value white">26°</div>
+                        <div class="info-value white"><?php echo (int)$predictionDay1["weather"]["temperature_2m"] ?>°</div>
                     </div>
                 </div>
             </div>
@@ -177,7 +187,7 @@
                 <div class="info-icon">💨</div>
                 <div>
                     <div class="info-title">Vent</div>
-                    <div class="info-value"><?php echo (int)$weather["wind"] ?> km/h</div>
+                    <div class="info-value"><?php echo (int)$predictionDay1["weather"]["wind_speed_10m"] ?> km/h</div>
                     <div class="info-desc">Nord-Est</div>
                 </div>
             </div>
@@ -187,7 +197,7 @@
                 <div class="info-icon">💧</div>
                 <div>
                     <div class="info-title">Humidité</div>
-                    <div class="info-value"><?php echo (int)$weather["humidity"] ?>%</div>
+                    <div class="info-value"><?php echo (int)$predictionDay1["weather"]["humidity_2m"] ?>%</div>
                     <div class="info-desc">Normale</div>
                 </div>
             </div>
@@ -243,45 +253,35 @@
                     <div class="day-name">Mer</div>
                     <div class="day-icon">☀️</div>
                     <div class="day-temp">
-                        <span class="day-high">25°</span>
-                        <span class="white">|</span>
-                        <span class="day-low">16°</span>
+                        <span class="day-high"><?php echo (int)$predictionDay2["weather"]["temperature_2m"] ?>°</span>
                     </div>
                 </div>
                 <div class="day-card">
                     <div class="day-name">Jeu</div>
                     <div class="day-icon">⛅</div>
                     <div class="day-temp">
-                        <span class="day-high">24°</span>
-                        <span class="white">|</span>
-                        <span class="day-low">15°</span>
+                        <span class="day-high"><?php echo (int)$predictionDay3["weather"]["temperature_2m"] ?>°</span>
                     </div>
                 </div>
                 <div class="day-card">
                     <div class="day-name">Ven</div>
                     <div class="day-icon">🌦️</div>
                     <div class="day-temp">
-                        <span class="day-high">22°</span>
-                        <span class="white">|</span>
-                        <span class="day-low">14°</span>
+                        <span class="day-high"><?php echo (int)$predictionDay3["weather"]["temperature_2m"] ?>°</span>
                     </div>
                 </div>
                 <div class="day-card">
                     <div class="day-name">Sam</div>
                     <div class="day-icon">🌧️</div>
                     <div class="day-temp">
-                        <span class="day-high">19°</span>
-                        <span class="white">|</span>
-                        <span class="day-low">13°</span>
+                        <span class="day-high"><?php echo (int)$predictionDay3["weather"]["temperature_2m"] ?>°</span>
                     </div>
                 </div>
                 <div class="day-card">
                     <div class="day-name">Dim</div>
                     <div class="day-icon">🌤️</div>
                     <div class="day-temp">
-                        <span class="day-high">21°</span>
-                        <span class="white">|</span>
-                        <span class="day-low">12°</span>
+                        <span class="day-high"><?php echo (int)$predictionDay3["weather"]["temperature_2m"] ?>°</span>
                     </div>
                 </div>
 

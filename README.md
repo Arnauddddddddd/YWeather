@@ -100,7 +100,8 @@ Autocomplétion : Suggestions en temps réel
 Page météo : Affichage des prévisions avec animations 3D
 
 <br>
-## 📁 Structure du projet
+
+## Structure du projet
 
 ```text
 YWeather/
@@ -134,6 +135,7 @@ YWeather/
 <br>
 
 ## API Documentation
+
 Endpoints disponibles
 <br>
 MéthodeEndpointDescriptionGET/YWeather/{city}Récupère les infos d'une villeGET/YWeather/suggest/{query}Autocomplétion des villesGET/YWeather/city/{name}Page météo complètePOST/YWeather/Ajoute une nouvelle villePUT/YWeather/Met à jour une villeDELETE/YWeather/Supprime une ville

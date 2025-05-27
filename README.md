@@ -1,4 +1,4 @@
-YWeather 🌤️
+#YWeather 🌤️
 <br>
 Description
 YWeather est une application web intelligente de prévision météorologique qui combine l'analyse de données historiques avec des algorithmes de machine learning pour fournir des prédictions précises et personnalisées par ville.
@@ -160,63 +160,6 @@ Cibles : Température, Humidité, Précipitations, Vitesse du vent
 Utilisation du modèle
 python# Prédiction simple
 python model/prediction/prediction.py predict 2025-05-27 14 Montpellier 20.5
-
-# Prédiction hebdomadaire
-python model/prediction/prediction.py weekly 2025-05-27 14 Montpellier 20.5
-<br>
-🛡️ Sécurité
-
-Protection SQL : Requêtes préparées PDO
-Validation des entrées : Échappement côté serveur
-CORS : Headers configurés
-Fichiers sensibles : Bloqués via .htaccess
-
-<br>
-📊 Performances
-
-Cache : Réutilisation des prédictions récentes
-Batch processing : Import optimisé des données
-Index DB : Requêtes accélérées
-Compression : GZIP activé
-
-<br>
-🚧 Roadmap
-
- Conteneurisation Docker
- API GraphQL
- Application mobile (PWA)
- WebSocket pour temps réel
- Intégration données satellites
- Modèles LSTM/Transformer
- Déploiement cloud (AWS/GCP)
-
-<br>
-🤝 Contribution
-Les contributions sont les bienvenues ! Pour contribuer :
-
-Fork le projet
-Créer une branche (git checkout -b feature/AmazingFeature)
-Commit les changements (git commit -m 'Add AmazingFeature')
-Push la branche (git push origin feature/AmazingFeature)
-Ouvrir une Pull Request
-
-<br>
-📝 Licence
-Ce projet est sous licence MIT. Voir le fichier LICENSE pour plus de détails.
-<br>
-👥 Auteurs
-
-Votre Nom - Développeur principal - GitHub
-
-<br>
-🙏 Remerciements
-
-Données météo historiques françaises
-Communauté scikit-learn
-Vanta.js pour les effets visuels
-Font Awesome pour les icônes
-
-<br>
 
 <br>
 YWeather - Prévisions météo intelligentes 🌦️

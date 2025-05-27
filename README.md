@@ -56,7 +56,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 <br>
 4. Import des données
-Importer le fichier SQL dans model/data
+Importer le fichier "meteo-0025.csv" dans model/data
 <br>
 5. Préparation des données
 bash# Nettoyer les données brutes

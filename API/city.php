@@ -135,7 +135,7 @@
                 console.log(url);  
                 fetch(url)
                     .then(res => res.json())
-                    .then data => {
+                    .then( data => {
                         suggestions.innerHTML = '';
                         if (data.status === "success" && data.value.length > 0) {
                             data.value.forEach(city => {
@@ -381,9 +381,14 @@
                 </div>
                 <?php } ?>
             </div>              <!-- Prévision quotidienne -->
-            <div class="bento-card daily-forecast">            <?php            if ($weeklyPrediction && is_array($weeklyPrediction) && count($weeklyPrediction) > 0) {
+            <div class="bento-card daily-forecast">
+                <?php    
+                    // Définir les noms des jours de la semaine
+                    $dayNames = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];        
+            
+                    if ($weeklyPrediction && is_array($weeklyPrediction) && count($weeklyPrediction) > 0) {
                     // Utiliser la date de prédiction calculée basée sur les données disponibles
-                    $dayNames = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
+                    
                     $startDate = $predictionStartDate ? clone $predictionStartDate : new DateTime('tomorrow');
                     
                     for ($i = 0; $i < 7; $i++) { // 7 jours à partir de la date de prédiction
@@ -487,44 +492,7 @@
     </div>
 
 
-    <!-- Script de debug pour les prédictions -->
-    <script>        // Données de prédiction pour debug
-        const predictionData = {
-            currentPrediction: <?php echo json_encode($currentPrediction, JSON_PRETTY_PRINT); ?>,
-            weeklyPrediction: <?php echo json_encode($weeklyPrediction, JSON_PRETTY_PRINT); ?>,
-            cityName: "<?php echo $cityName; ?>",
-            currentTemperature: <?php echo (float)$weather["temperature"]; ?>,
-            latestDataDate: "<?php echo $latestDataDate ?: 'non disponible'; ?>",
-            predictionStartDate: "<?php echo $predictionStartDate ? $predictionStartDate->format('d/m/Y') : 'non calculée'; ?>"
-        };
-
-        console.log("=== YWEATHER PREDICTION DEBUG ===");
-        console.log("Ville:", predictionData.cityName);
-        console.log("Température actuelle (DB):", predictionData.currentTemperature + "°C");
-        console.log("Dernière date de données:", predictionData.latestDataDate);
-        console.log("Date de début des prédictions:", predictionData.predictionStartDate);
-        
-        if (predictionData.currentPrediction) {
-            console.log("✓ Prédiction actuelle disponible:");
-            console.log("  - Température prédite:", predictionData.currentPrediction.temperature_2m + "°C");
-            console.log("  - Humidité:", predictionData.currentPrediction.humidity_2m + "%");
-            console.log("  - Précipitations:", predictionData.currentPrediction.total_precipitation + "mm");
-            console.log("  - Vent:", predictionData.currentPrediction.wind_speed_10m + "km/h");
-        } else {
-            console.log("❌ Prédiction actuelle non disponible");
-        }
-
-        if (predictionData.weeklyPrediction && predictionData.weeklyPrediction.length > 0) {
-            console.log("✓ Prédiction hebdomadaire disponible:", predictionData.weeklyPrediction.length + " jours");
-            predictionData.weeklyPrediction.forEach((day, index) => {
-                console.log(`  Jour ${index + 1} (${day.date}): ${day.temperature_2m}°C - ${day.day_name}`);
-            });
-        } else {
-            console.log("❌ Prédiction hebdomadaire non disponible");
-        }
-        
-        console.log("=== FIN DEBUG ===");
-    </script>
+  
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.fog.min.js"></script>

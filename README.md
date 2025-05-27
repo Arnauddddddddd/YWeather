@@ -3,10 +3,10 @@ YWeather 🌤️
 Description
 YWeather est une application web intelligente de prévision météorologique qui combine l'analyse de données historiques avec des algorithmes de machine learning pour fournir des prédictions précises et personnalisées par ville.
 <br>
-[Afficher l'image](https://img.shields.io/badge/Status-En%20d%C3%A9veloppement-yellow)
-[Afficher l'image](https://img.shields.io/badge/PHP-7.4+-blue)
-[Afficher l'image](https://img.shields.io/badge/Python-3.8+-green)
-[Afficher l'image](https://img.shields.io/badge/License-MIT-red)
+![Afficher l'image](https://img.shields.io/badge/Status-En%20d%C3%A9veloppement-yellow)
+![Afficher l'image](https://img.shields.io/badge/PHP-7.4+-blue)
+![Afficher l'image](https://img.shields.io/badge/Python-3.8+-green)
+![Afficher l'image](https://img.shields.io/badge/License-MIT-red)
 <br>
 🚀 Fonctionnalités
 

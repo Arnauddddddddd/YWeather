@@ -99,7 +99,9 @@ Autocomplétion : Suggestions en temps réel
 Page météo : Affichage des prévisions avec animations 3D
 
 <br>
-```
+## 📁 Structure du projet
+
+```text
 YWeather/
 ├── API/
 │   ├── city.php            # Page principale météo

@@ -132,8 +132,10 @@ YWeather/
 └── README.md                # Ce fichier
 ```
 <br>
-🔌 API Documentation
+
+##🔌 API Documentation
 Endpoints disponibles
+<br>
 MéthodeEndpointDescriptionGET/YWeather/{city}Récupère les infos d'une villeGET/YWeather/suggest/{query}Autocomplétion des villesGET/YWeather/city/{name}Page météo complètePOST/YWeather/Ajoute une nouvelle villePUT/YWeather/Met à jour une villeDELETE/YWeather/Supprime une ville
 <br>
 Exemple de réponse API

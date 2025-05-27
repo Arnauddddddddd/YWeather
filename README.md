@@ -46,13 +46,13 @@ sql-- Utiliser le fichier yweatherDb.sql fourni
 bash# Créer un environnement virtuel
 python -m venv venv
 
-# Activer l'environnement (Windows)
+## Activer l'environnement (Windows)
 venv\Scripts\activate
 
-# Activer l'environnement (Linux/Mac)
+## Activer l'environnement (Linux/Mac)
 source venv/bin/activate
 
-# Installer les dépendances
+## Installer les dépendances
 pip install -r requirements.txt
 <br>
 4. Import des données
@@ -62,10 +62,10 @@ Importer le fichier SQL dans model/data
 bash# Nettoyer les données brutes
 python model/data/data_cleaner.py
 
-# Importer les données dans MySQL
+## Importer les données dans MySQL
 php model/data/import_data.php
 
-# Entraîner le modèle ML
+## Entraîner le modèle ML
 python model/model.py
 <br>
 ⚙️ Configuration

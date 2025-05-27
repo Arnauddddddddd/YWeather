@@ -99,34 +99,35 @@ Autocomplétion : Suggestions en temps réel
 Page météo : Affichage des prévisions avec animations 3D
 
 <br>
-📁 Structure du projet
+```
 YWeather/
 ├── API/
-│   ├── city.php          # Page principale météo
-│   ├── crud.php          # API CRUD pour les villes
-│   ├── crudPlace.php     # Gestion des lieux
-│   ├── predictions.php   # Interface PHP-Python
-│   └── result.js         # JavaScript pour l'UI
+│   ├── city.php            # Page principale météo
+│   ├── crud.php            # API CRUD pour les villes
+│   ├── crudPlace.php       # Gestion des lieux
+│   ├── predictions.php     # Interface PHP-Python
+│   └── result.js           # JavaScript pour l'UI
 │
 ├── assets/
-│   ├── css/             # Feuilles de style
-│   └── images/          # Images et icônes
+│   ├── css/                # Feuilles de style
+│   └── images/             # Images et icônes
 │
 ├── model/
 │   ├── data/
-│   │   ├── data_cleaner.py    # Nettoyage des données
-│   │   └── import_data.php    # Import en base
+│   │   ├── data_cleaner.py     # Nettoyage des données
+│   │   └── import_data.php     # Import en base
 │   ├── prediction/
-│   │   └── prediction.py      # Script de prédiction
-│   └── model.py              # Entraînement du modèle
+│   │   └── prediction.py       # Script de prédiction
+│   └── model.py               # Entraînement du modèle
 │
 ├── src/
 │   └── db/
-│       └── db.php       # Configuration base de données
+│       └── db.php           # Configuration base de données
 │
-├── .htaccess            # Configuration Apache
-├── index.php            # Point d'entrée
-└── README.md            # Ce fichier
+├── .htaccess                # Configuration Apache
+├── index.php                # Point d'entrée
+└── README.md                # Ce fichier
+```
 <br>
 🔌 API Documentation
 Endpoints disponibles

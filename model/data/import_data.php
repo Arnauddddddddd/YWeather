@@ -1,5 +1,5 @@
 <?php
-require_once "src/db/db.php";
+require_once "../../src/db/db.php";
 
 function importDataToDB($pdo) {
     if (!file_exists('processed_data.csv')) {

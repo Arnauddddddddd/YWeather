@@ -37,16 +37,14 @@
 
         <div class="div-main-content">
             <div class="div">
-                <h1 class="main-text"> Wanna look closer to our </br> beautiful api ! </h1>
-            </div>
-    
-            <div class="div">
-                <div>
+                <h1 class="main-text"> Wanna look closer at our </br> beautiful api ! </h1>
+            </div>            <div class="div">
+                <div class="search-bar-container">
                     <div class="search-bar">
-                        <button type="submit" id="buttonCity"> <img src="assets/loupe_blanche.png" alt="" srcset=""> </button>
                         <input type="text" name="id" id="getCity" placeholder="Search for a city ...">
+                        <button type="submit" id="buttonCity"> <img src="assets/images/loupe_blanche.png" alt="" srcset=""> </button>
                     </div>
-                    <div id="suggestions" class="suggestions"></div>
+                    <div id="suggestions" class="suggestions-dropdown"></div>
                 </div>
                 
 
@@ -102,17 +100,22 @@
             let url = `http://localhost/YWeather/suggest/${encodeURIComponent(query)}`
             console.log(url);  
             fetch(url)
-                .then(res => res.json())
-                .then(data => {
+                .then(res => res.json())                .then(data => {
                     suggestions.innerHTML = '';
                     if (data.status === "success" && data.value.length > 0) {
                         data.value.forEach(city => {
                             const div = document.createElement('div');
-                            div.textContent = city.name;
+                            div.className = 'suggestion-item';
+                            div.innerHTML = `
+                                <i class="fas fa-map-marker-alt suggestion-icon"></i>
+                                <span class="suggestion-text">${city.name}</span>
+                            `;
                             div.style.cursor = "pointer";
                             div.onclick = () => {
                                 input.value = city.name;
                                 suggestions.style.display = 'none';
+                                // Rediriger vers la page de la ville
+                                window.location.href = `/YWeather/city/${encodeURIComponent(city.name)}`;
                             };
                             suggestions.appendChild(div);
                         });

@@ -44,4 +44,38 @@ function getLastWeathersByPlace(PDO $pdo, int $nbr, int $placeId): array {
     }
 }
 
+function getLatestDataDate(PDO $pdo): ?string {
+    $sql = "
+        SELECT MAX(time.hour) as latest_date
+        FROM time
+    ";
+
+    try {
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result ? $result['latest_date'] : null;
+    } catch (PDOException $e) {
+        return null;
+    }
+}
+
+function getLatestDataDateForPlace(PDO $pdo, int $placeId): ?string {
+    $sql = "
+        SELECT MAX(time.hour) as latest_date
+        FROM place_time_weather
+        INNER JOIN time ON place_time_weather.time_id = time.time_id
+        WHERE place_time_weather.place_id = :placeId
+    ";
+
+    try {
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([':placeId' => $placeId]);
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result ? $result['latest_date'] : null;
+    } catch (PDOException $e) {
+        return null;
+    }
+}
+
 ?>

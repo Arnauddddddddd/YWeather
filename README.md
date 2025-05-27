@@ -153,6 +153,7 @@ json{
     ]
 }
 <br>
+<br>
 🤖 Module d'Intelligence Artificielle
 Modèle utilisé
 

@@ -2,6 +2,14 @@
 
 require_once "../src/db/db.php";
 
+/**
+ * Récupère les informations météorologiques pour un lieu et un temps donné.
+ *
+ * @param PDO $pdo L'objet PDO pour la connexion à la base de données.
+ * @param int $placeId L'ID du lieu.
+ * @param int $timeId L'ID du temps.
+ * @return array|null Un tableau associatif contenant les données météorologiques, ou null si non trouvé ou en cas d'erreur.
+ */
 function getWeatherByPlaceAndTime($pdo, int $placeId, int $timeId): ?array {
     $sql = "
         SELECT weather.*
@@ -23,6 +31,14 @@ function getWeatherByPlaceAndTime($pdo, int $placeId, int $timeId): ?array {
     }
 }
 
+/**
+ * Récupère les dernières données météorologiques pour un lieu spécifique.
+ *
+ * @param PDO $pdo L'objet PDO pour la connexion à la base de données.
+ * @param int $nbr Le nombre de dernières données météorologiques à récupérer.
+ * @param int $placeId L'ID du lieu.
+ * @return array Un tableau d'objets contenant les données météorologiques, ou un tableau vide en cas d'erreur.
+ */
 function getLastWeathersByPlace(PDO $pdo, int $nbr, int $placeId): array {
     $nbr = (int)$nbr;
     $sql = "
@@ -44,6 +60,12 @@ function getLastWeathersByPlace(PDO $pdo, int $nbr, int $placeId): array {
     }
 }
 
+/**
+ * Récupère la date la plus récente des données disponibles dans la table 'time'.
+ *
+ * @param PDO $pdo L'objet PDO pour la connexion à la base de données.
+ * @return string|null La date la plus récente au format string, ou null si aucune donnée ou en cas d'erreur.
+ */
 function getLatestDataDate(PDO $pdo): ?string {
     $sql = "
         SELECT MAX(time.hour) as latest_date
@@ -60,6 +82,13 @@ function getLatestDataDate(PDO $pdo): ?string {
     }
 }
 
+/**
+ * Récupère la date la plus récente des données météorologiques pour un lieu spécifique.
+ *
+ * @param PDO $pdo L'objet PDO pour la connexion à la base de données.
+ * @param int $placeId L'ID du lieu.
+ * @return string|null La date la plus récente au format string pour le lieu spécifié, ou null si aucune donnée ou en cas d'erreur.
+ */
 function getLatestDataDateForPlace(PDO $pdo, int $placeId): ?string {
     $sql = "
         SELECT MAX(time.hour) as latest_date
